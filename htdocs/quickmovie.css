@@ -85,6 +85,12 @@ form label {
     min-height: 160px;
 }
 
+.movieNoImg {
+    position: relative;
+    margin: 10px;
+    border: 2px solid;
+}
+
 .imgBlock a {
           text-decoration: none;
 }
@@ -131,4 +137,8 @@ form label {
 
 .moreDetails {
              color: #0044ff;
+}
+
+.clearDiv {
+          clear: both;
 }

@@ -7,10 +7,14 @@
 % endif
 
 % for movie in movies:
+% if images == True:
 <div class="movie">
   <div class="imgBlock">
     <a href="http://imdb.com/title/tt${movie.imdb_id}/"><img src="${movie.imageurl}" /></a>
   </div>
+% else:
+<div class="movieNoImg">
+% endif
   <div class="titleBlock">
     <strong>${movie.name}</strong> (${movie.year}) (${movie.genres})
   <br />
@@ -28,8 +32,10 @@ ${movie.plot}
 % endif
 
 </div>
-  <br />
-  
+
+
 </div>
+
+<div class="clearDiv"></div>
 % endfor
 </table>
