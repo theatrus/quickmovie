@@ -84,7 +84,17 @@ form label {
     border: 2px solid;
 }
 
+.imgBlock a {
+          text-decoration: none;
+}
+
+.imgBlock img {
+          border: 0;
+}
+
 .imgBlock {
+
+
           position: relative;
           left: 0px;
           float: left;

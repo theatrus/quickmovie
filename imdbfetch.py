@@ -46,7 +46,10 @@ def main():
             iares = ia.search_movie(file)
             iamovie = iares[0]
             ia.update(iamovie)
-            print file, '->', iamovie['title']
+            
+            # Try to fix broken consoles without unicode - force to ascii
+
+            print file, u'->', iamovie['title'].encode('ascii', 'replace')
             try:
                 m = Movie()
                 m.name = iamovie['title']

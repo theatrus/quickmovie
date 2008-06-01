@@ -3,8 +3,11 @@
 
 % for movie in movies:
 <div class="movie">
-  <div class="imgBlock"><img src="${movie.imageurl}" /></div>
-<div class="titleBlock"> <strong>${movie.name}</strong> (${movie.year}) (${movie.genres})
+  <div class="imgBlock">
+    <a href="http://imdb.com/title/tt${movie.imdb_id}/"><img src="${movie.imageurl}" /></a>
+  </div>
+  <div class="titleBlock">
+    <strong>${movie.name}</strong> (${movie.year}) (${movie.genres})
   <br />
   Running time: ${movie.length} min, IMDB Rating: ${movie.rating}, File: ${movie.filename}
 
