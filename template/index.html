@@ -1,5 +1,10 @@
 <%inherit file="base.html"/>
 
+% if not plot:
+<a href="/?plot=True">See all with plots</a>
+% else:
+<a href="/">See without plots</a>
+% endif
 
 % for movie in movies:
 <div class="movie">
@@ -13,7 +18,16 @@
 
 
 </div>
-<div class="plotBlock"> ${movie.plot}</div>
+<div class="plotBlock" id="plot_${movie.id}"> 
+% if plot:
+${movie.plot}
+% else:
+
+<span class="moreDetails" onclick="$('div#plot_${movie.id}').load('/plot?movie=${movie.id}')"><em>More details...</em></span>
+
+% endif
+
+</div>
   <br />
   
 </div>

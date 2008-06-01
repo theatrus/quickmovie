@@ -1,5 +1,5 @@
 body {
-   font: 100% verdana,arial,sans-serif; 
+   font: 80% verdana,arial,sans-serif; 
 }
 
 #header {
@@ -82,6 +82,7 @@ form label {
     position: relative;
     margin: 10px;
     border: 2px solid;
+    min-height: 160px;
 }
 
 .imgBlock a {
@@ -98,6 +99,7 @@ form label {
           position: relative;
           left: 0px;
           float: left;
+          clear: both;
           top: 0;
           bottom: 0;
           width: 120px;
@@ -115,7 +117,8 @@ form label {
 
 .plotBlock {
     position: relative;
-    clear: both;
+
+    padding: 10px;
 }
 
 
@@ -125,3 +128,7 @@ form label {
     background-color: #ffeeee;
     padding: 5px;
     }
+
+.moreDetails {
+             color: #0044ff;
+}
