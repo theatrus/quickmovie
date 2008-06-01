@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<%def name="header()">
+
+
+</%def>
+<%def name="title()">
+quickmovie
+</%def>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>quickmovie: ${self.title()}</title>
+    <link href="/quickmovie.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div id="header">
+      ${header()}
+    </div>
+    <div id="bodyText">
+      ${next.body()}
+    </div>
+    <div id="footer">
+<!--      quickmovie is &copy 2008 Yann Ramin. Licensed under the <a href="http://www.gnu.org/licenses/agpl-3.0.html">GNU Affero GPL v3</a>. -->
+    </div>
+  </body>
+</html>

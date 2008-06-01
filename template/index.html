@@ -1,0 +1,18 @@
+<%inherit file="base.html"/>
+
+
+% for movie in movies:
+<div class="movie">
+  <div class="imgBlock"><img src="${movie.imageurl}" /></div>
+<div class="titleBlock"> <strong>${movie.name}</strong> (${movie.year}) (${movie.genres})
+  <br />
+  Running time: ${movie.length} min, IMDB Rating: ${movie.rating}, File: ${movie.filename}
+
+
+</div>
+<div class="plotBlock"> ${movie.plot}</div>
+  <br />
+  
+</div>
+% endfor
+</table>

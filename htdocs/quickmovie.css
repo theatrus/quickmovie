@@ -1,0 +1,117 @@
+body {
+   font: 100% verdana,arial,sans-serif; 
+}
+
+#header {
+	margin-bottom: 20px;
+
+    position: relative;
+    
+
+}
+
+#header .links {
+    padding-bottom: 1px;
+    border-bottom: 1px solid;
+    font-variant: small-caps;
+    position: absolute;
+    height: 25px;
+    top: 10%;
+    left: 120px;
+}
+
+#header a {
+    text-decoration: none;
+    color: #000000;
+    
+}
+
+#header a:hover {
+    text-decoration: none;
+    background-color: #dddddd;
+}
+
+#header img {
+    border: 0px;
+    margin-right: 17px;
+}
+
+#bodyText {
+
+
+}
+form {  /* set width in form, not fieldset (still takes up more room w/ fieldset width */
+  font:100% verdana,arial,sans-serif;
+  margin: 0;
+  padding: 0;
+  min-width: 500px;
+  max-width: 600px;
+  width: 560px; 
+}
+
+form input, form textarea {
+	
+	width:auto;      /* set width of form elements to auto-size, otherwise watch for wrap on resize */
+	margin:5px 0 0 10px; 
+}
+
+form select {
+    width: auto;
+    margin: 5px 0 0 10px;
+}
+
+
+form label { 
+	display: block;  /* block float the labels to left column, set a width */
+	float: left; 
+	width: 150px; 
+	padding: 0; 
+	margin: 5px 0 0; /* set top margin same as form input - textarea etc. elements */
+	text-align: right; 
+}
+
+
+#footer {
+	border-top: 1px solid;
+	margin-top: 20px;
+	font-size: 60%;
+}
+
+.movie {
+
+    position: relative;
+    margin: 10px;
+    border: 2px solid;
+}
+
+.imgBlock {
+          position: relative;
+          left: 0px;
+          float: left;
+          top: 0;
+          bottom: 0;
+          width: 120px;
+}
+
+.titleBlock {
+    background-color: #dddddd;
+    position: relative;
+    right: 0px;
+    top:0;
+    z-index: -999;
+    padding: 10px;
+
+}
+
+.plotBlock {
+    position: relative;
+    clear: both;
+}
+
+
+.error {
+    border: 2px solid ;
+    border-color:#ff0000;
+    background-color: #ffeeee;
+    padding: 5px;
+    }
