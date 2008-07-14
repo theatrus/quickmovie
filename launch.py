@@ -69,10 +69,8 @@ def main():
     root = quickmovie.controller.main.Main()
 
     cherrypy.tree.mount(root, '/', config = gconf)
-
-    cherrypy.server.quickstart()
     cherrypy.engine.start()
-
+    cherrypy.engine.block()
 
 
 if __name__ == '__main__':
