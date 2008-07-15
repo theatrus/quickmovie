@@ -97,7 +97,7 @@ def main():
 
                 if 'cover url' not in iamovie:
                     print "   Couldn't fetch cover art"
-                    m.imageurl = 'nocover.jpg'
+                    m.imageurl = u'nocover.jpg'
                 else:
                     fetch_cover(iamovie['cover url'], 'htdocs' + os.path.sep + cover_url)
                     m.imageurl = cover_url
