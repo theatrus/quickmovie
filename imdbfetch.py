@@ -34,6 +34,23 @@ import re
 
 import urllib2
 
+def fetch_cover(inurl, outfile):
+    filein = urllib2.urlopen(inurl)
+    fileout = open(outfile, 'w')
+    while True:
+        try:
+            bytes = filein.read(1024)
+            fileout.write(bytes)
+        except IOError, (errno, strerror):
+            print "IOERROR!"
+
+        if bytes == "":
+            break
+    filein.close()
+    fileout.close()
+    return outfile
+
+
 def main():
     current_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -48,7 +65,7 @@ def main():
                 continue
 
             rawfile = unicode(file)
-            
+
             r = meta.Session.query(Movie).filter_by(filename = rawfile).all()
             if len(r) > 0:
                 print "Already in DB",rawfile
@@ -63,10 +80,11 @@ def main():
             iares = ia.search_movie(file)
             iamovie = iares[0]
             ia.update(iamovie)
-            
+
             # Try to fix broken consoles without unicode - force to ascii
 
             print file, u'->', iamovie['title'].encode('ascii', 'replace')
+
             try:
                 m = Movie()
                 m.name = iamovie['title']
@@ -75,38 +93,36 @@ def main():
                 m.year = int(iamovie['year'])
 
                 # Fetch cover
-                cover_url = '/covers/'+m.imdb_id+'.jpg'
+                cover_url = os.path.sep + 'covers' + os.path.sep + m.imdb_id + '.jpg'
 
-                filein = urllib2.urlopen(iamovie['cover url'])
-                fileout = open('htdocs/covers/'+m.imdb_id+'.jpg', 'w')
-                while True:
-                    try:
-                        bytes = filein.read(1024)
-                        fileout.write(bytes)
-                    except IOError, (errno, strerror):
-                        print "IOERROR!"
-                    if bytes == "":
-                        break
-                filein.close()
-                fileout.close()
-                        
-                
+                if 'cover url' not in iamovie:
+                    print "   Couldn't fetch cover art"
+                    m.imageurl = 'nocover.jpg'
+                else:
+                    fetch_cover(iamovie['cover url'], 'htdocs' + os.path.sep + cover_url)
+                    m.imageurl = cover_url
 
-                m.imageurl = cover_url
                 m.genres = iamovie['genres'][0]
                 m.length = iamovie['runtimes'][0]
                 if iamovie.has_key('taglines'):
                     ia.update(iamovie, 'taglines')
                     m.taglines = u"".join(iamovie['taglines'])
                 m.rating = float(iamovie['rating'])
-                plot = u"".join(iamovie['plot'][0])
-                rplot = re.search('(.*)::(.*)', plot)
-                m.plot = rplot.group(2)
-                
+
+                plot = u""
+                if 'plot' in iamovie:
+                    plot = u"".join(iamovie['plot'][0])
+                    rplot = re.search('(.*)::(.*)', plot)
+                    m.plot = rplot.group(2)
+                else:
+                    m.plot = u"No plot available."
+
+
+
                 meta.Session.save(m)
                 meta.Session.commit()
             except Exception,e:
-                print "Exception",e
+                print "Exception while processing IMDB request",e
 
 
 if __name__ == '__main__':
