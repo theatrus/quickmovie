@@ -58,15 +58,17 @@ def main():
 
     engine = sa.create_engine('sqlite:///quickmovie.sqlite')
     quickmovie.model.init(engine)
+    print "Running quickmovie scanner"
 
     for dirpath, dirnames, filenames in os.walk(sys.argv[1]):
+
         for file in filenames:
             file = file.lower()
-            if file[-3:] != 'iso' or file[-3:] != 'avi':
+            if file[-3:] != 'iso' and file[-3:] != 'avi':
                 continue
 
             rawfile = unicode(file)
-
+            print rawfile
             m = None
 
             r = meta.Session.query(Movie).filter_by(filename = rawfile).all()
@@ -83,6 +85,7 @@ def main():
             iares = ia.search_movie(file)
             iamovie = iares[0]
             ia.update(iamovie)
+            ia.update(iamovie, 'plot')
 
             # Try to fix broken consoles without unicode - force to ascii
 
@@ -114,7 +117,7 @@ def main():
                 m.rating = float(iamovie['rating'])
 
                 plot = u""
-                if 'plot' in iamovie:
+                if iamovie.has_key('plot'):
                     plot = u"".join(iamovie['plot'][0])
                     rplot = re.search('(.*)::(.*)', plot)
                     m.plot = rplot.group(2)
