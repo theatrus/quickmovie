@@ -136,6 +136,7 @@ form label {
     }
 
 .moreDetails {
+             cursor: pointer;
              color: #0044ff;
 }
 
