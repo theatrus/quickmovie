@@ -35,6 +35,7 @@ import re
 import urllib2
 
 def fetch_cover(inurl, outfile):
+    print "    Trying to fetch",inurl
     filein = urllib2.urlopen(inurl)
     fileout = open(outfile, 'w')
     while True:
@@ -61,15 +62,17 @@ def main():
     for dirpath, dirnames, filenames in os.walk(sys.argv[1]):
         for file in filenames:
             file = file.lower()
-            if file[-3:] != 'iso':
+            if file[-3:] != 'iso' or file[-3:] != 'avi':
                 continue
 
             rawfile = unicode(file)
 
+            m = None
+
             r = meta.Session.query(Movie).filter_by(filename = rawfile).all()
             if len(r) > 0:
-                print "Already in DB",rawfile
-                continue
+                print "Already in DB, going to update",rawfile
+                m = r[0]
 
             print rawfile
 
@@ -86,7 +89,8 @@ def main():
             print file, u'->', iamovie['title'].encode('ascii', 'replace')
 
             try:
-                m = Movie()
+                if m == None:
+                    m = Movie() # Make a new movie
                 m.name = iamovie['title']
                 m.filename = rawfile
                 m.imdb_id = unicode(iamovie.getID())
@@ -95,7 +99,7 @@ def main():
                 # Fetch cover
                 cover_url = os.path.sep + 'covers' + os.path.sep + m.imdb_id + '.jpg'
 
-                if 'cover url' not in iamovie:
+                if not iamovie.has_key('cover url'):
                     print "   Couldn't fetch cover art"
                     m.imageurl = u'nocover.jpg'
                 else:
@@ -118,9 +122,13 @@ def main():
                     m.plot = u"No plot available."
 
 
+                try:
+                    meta.Session.save(m)
+                except:
+                    pass
+                finally:
+                    meta.Session.commit()
 
-                meta.Session.save(m)
-                meta.Session.commit()
             except Exception,e:
                 print "Exception while processing IMDB request",e
 
