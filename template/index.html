@@ -24,7 +24,7 @@
 </div>
 <div class="plotBlock" id="plot_${movie.id}"> 
 % if plot:
-${movie.plot}
+${movie.plots[0].plot}
 % else:
 
 <span class="moreDetails" onclick="$('div#plot_${movie.id}').load('/plot?movie=${movie.id}')"><em>More details...</em></span>

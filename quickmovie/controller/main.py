@@ -25,7 +25,7 @@ class Main(object):
     @cherrypy.expose
     def plot(self, movie):
         m = meta.Session.query(Movie).filter_by(id = movie)[0]
-        return m.plot
+        return m.plots[0].plot
 
     @cherrypy.expose
     def index(self, images = True, plot = False):

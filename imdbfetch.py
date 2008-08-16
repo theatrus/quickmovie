@@ -23,7 +23,7 @@ import os
 import cherrypy
 
 from quickmovie.model import meta
-from quickmovie.model import Movie
+from quickmovie.model import Movie, Plot
 import quickmovie.model
 
 import sqlalchemy as sa
@@ -50,6 +50,37 @@ def fetch_cover(inurl, outfile):
     filein.close()
     fileout.close()
     return outfile
+
+
+
+def store_plot(rawplot, movie):
+    plot = u"".join(rawplot)
+    rplot = re.search('(.*)::(.*)', plot)
+    plot = rplot.group(2)
+
+    found = False
+
+    for existing_plot in movie.plots:
+        if plot == existing_plot.plot:
+            found = True
+
+    if found == False:
+        print "   Fetched a plot"
+        po = Plot()
+
+        po.plot = plot
+        po.pick = False
+        movie.plots.append(po)
+        meta.Session.save(po)
+
+
+
+def store_plots(iamovie, movie):
+    if iamovie.has_key('plot'):
+        for rawplot in iamovie['plot']:
+            store_plot(rawplot, movie)
+    else:
+        store_plot(u"No plots found.", movie)
 
 
 def main():
@@ -116,14 +147,10 @@ def main():
                     m.taglines = u"".join(iamovie['taglines'])
                 m.rating = float(iamovie['rating'])
 
-                plot = u""
-                if iamovie.has_key('plot'):
-                    plot = u"".join(iamovie['plot'][0])
-                    rplot = re.search('(.*)::(.*)', plot)
-                    m.plot = rplot.group(2)
-                else:
-                    m.plot = u"No plot available."
 
+
+                # Look for existing plots
+                store_plots(iamovie, m)
 
                 try:
                     meta.Session.save(m)

@@ -31,20 +31,26 @@ def init(bind):
     load_orm()
 
 def load_orm():
-    orm.mapper(Movie, movies_table)
+    orm.mapper(Plot, plots_table)
+    orm.mapper(Movie, movies_table, properties={
+        'plots': orm.relation(Plot)
+        })
 
 
-
+plots_table = sa.Table('plots', meta.metadata,
+                       sa.Column('id', sa.Integer, primary_key = True),
+                       sa.Column('movie_id', sa.Integer, sa.ForeignKey('movies.id')),
+                       sa.Column('pick', sa.Boolean),
+                       sa.Column('plot', sa.Unicode(600)))
 
 
 movies_table = sa.Table('movies', meta.metadata,
-                        sa.Column('id', sa.Integer, primary_key=True),
+                        sa.Column('id', sa.Integer, primary_key = True),
                         sa.Column('name', sa.Unicode(200)),
                         sa.Column('filename', sa.Unicode(300)),
                         sa.Column('length', sa.Unicode(100)),
                         sa.Column('imdb_id', sa.Unicode(100)),
                         sa.Column('rating', sa.Float),
-                        sa.Column('plot', sa.Unicode(500)),
                         sa.Column('taglines', sa.Unicode(500)),
                         sa.Column('year', sa.Integer),
                         sa.Column('genres', sa.Unicode(500)),
@@ -53,3 +59,5 @@ movies_table = sa.Table('movies', meta.metadata,
 class Movie(object):
     pass
 
+class Plot(object):
+    pass
