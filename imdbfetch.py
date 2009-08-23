@@ -54,9 +54,10 @@ def fetch_cover(inurl, outfile):
 
 
 def store_plot(rawplot, movie):
+
     plot = u"".join(rawplot)
     rplot = re.search('(.*)::(.*)', plot)
-    plot = rplot.group(2)
+    plot = rplot.group(1)
 
     found = False
 
