@@ -72,7 +72,7 @@ def store_plot(rawplot, movie):
         po.plot = plot
         po.pick = False
         movie.plots.append(po)
-        meta.Session.save(po)
+        meta.Session.add(po)
 
 
 
@@ -115,10 +115,11 @@ def main():
 
             ia = imdb.IMDb()
             iares = ia.search_movie(file)
+	    if len(iares) == 0:
+		continue
             iamovie = iares[0]
             ia.update(iamovie)
             ia.update(iamovie, 'plot')
-
             # Try to fix broken consoles without unicode - force to ascii
 
             print file, u'->', iamovie['title'].encode('ascii', 'replace')
@@ -154,7 +155,7 @@ def main():
                 store_plots(iamovie, m)
 
                 try:
-                    meta.Session.save(m)
+                    meta.Session.add(m)
                 except:
                     pass
                 finally:

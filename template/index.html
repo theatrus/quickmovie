@@ -1,12 +1,33 @@
 <%inherit file="base.html"/>
-
-% if not plot:
-<a href="/?plot=True">See all with plots</a>
+<div class="filterbox">
+<form method="get">
+<strong> Plot: </strong>
+% if not plot or plot == "False":
+<input type="radio" name="plot" value="True">Display</input>
+<input type="radio" name="plot" value="False" checked>Hide</input>
 % else:
-<a href="/">See without plots</a>
+<input type="radio" name="plot" value="True" checked>Display</input>
+<input type="radio" name="plot" value="False">Hide</input>
 % endif
 
+<strong>Genre: </strong><select name="genre">
+<option value="All">All</option>
+% for genreitem in genres:
+% if genre == genreitem.genres:
+<option selected="selected" value="${genreitem.genres}">${genreitem.genres}</option>
+% else:
+<option value="${genreitem.genres}">${genreitem.genres}</option>
+% endif
+% endfor
+</select>
+<input type="submit" name="filter" value="Filter"/>
+</form>
+</div>
+
 % for movie in movies:
+
+% if movie.genres == genre or genre == 'All':
+
 % if images == True:
 <div class="movie">
   <div class="imgBlock">
@@ -23,7 +44,7 @@
 
 </div>
 <div class="plotBlock" id="plot_${movie.id}"> 
-% if plot:
+% if plot == "True":
 ${movie.plots[0].plot}
 % else:
 
@@ -37,5 +58,6 @@ ${movie.plots[0].plot}
 </div>
 
 <div class="clearDiv"></div>
+% endif
 % endfor
 </table>

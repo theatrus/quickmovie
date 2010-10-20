@@ -25,7 +25,7 @@ from quickmovie.model import meta
 def init(bind):
     meta.engine = bind
     meta.Session = orm.scoped_session(
-        orm.sessionmaker(transactional = True, autoflush = True, bind = bind))
+        orm.sessionmaker(autocommit = False, autoflush = True, bind = bind))
     meta.metadata.create_all(bind=meta.engine)
 
     load_orm()

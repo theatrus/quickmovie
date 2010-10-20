@@ -28,10 +28,12 @@ class Main(object):
         return m.plots[0].plot
 
     @cherrypy.expose
-    def index(self, images = True, plot = False):
+    def index(self, images = True, plot = False, genre = "All", filter="Filter"):
         t = {}
         t['movies'] = meta.Session.query(Movie).order_by(Movie.name)
+	t['genres'] = meta.Session.query(Movie.genres).distinct();
         t['images'] = images
         t['plot'] = plot
+	t['genre'] = genre
         meta.Session.commit()
         return template('index.html', t)

@@ -46,7 +46,7 @@ form {  /* set width in form, not fieldset (still takes up more room w/ fieldset
 
 form input, form textarea {
 	width:auto;      /* set width of form elements to auto-size, otherwise watch for wrap on resize */
-	margin:5px 0 0 10px;
+	margin:5px 0 0 0px;
 }
 
 form select {
@@ -69,6 +69,13 @@ form label {
 	border-top: 1px solid;
 	margin-top: 20px;
 	font-size: 60%;
+}
+
+.filterbox {
+	position: relative;
+	margin: 10px;
+	border: 2px solid;
+	padding: 5px;
 }
 
 .movie {
