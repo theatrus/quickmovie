@@ -110,13 +110,13 @@ def main():
 
             print rawfile
 
-            file = file[:-4]
+            file = file[:-4] # Crude extension strip
             file = file.replace("_", " ")
 
             ia = imdb.IMDb()
             iares = ia.search_movie(file)
-	    if len(iares) == 0:
-		continue
+            if len(iares) == 0:
+                continue
             iamovie = iares[0]
             ia.update(iamovie)
             ia.update(iamovie, 'plot')
